@@ -1,23 +1,23 @@
 version: 0.2
+
+env:
+  variables:
+    CACHE_CONTROL: "86400"
+    BUILD_FOLDER: "dist"
 phases:
   install:
     runtime-versions:
-      nodejs: 14.x
-  pre_build:
+      nodejs: 14
     commands:
-      - echo In the pre_build phase...
+      - echo Installing source NPM dependencies...
       - npm install
       - npm install -g @angular/cli
   build:
     commands:
-      - echo Build started on `date`
-      - ng build
-  post_build:
-    commands:
-      - echo Build completed on `date`
-     
+      - echo Build started
+      - ng build --prod
 artifacts:
   files:
-    - '**/*'
-  base-directory: 'dist/ggreviews'
-  discard-paths: no
+    - "**/*"
+  base-directory: "dist*"
+  discard-paths: yes
