@@ -1,0 +1,99 @@
+/*for mobile s*/
+@media screen and (max-width: 320px) {
+  .gameImagesFilterBarShown {
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+/*for mobile m*/
+@media screen and (min-width: 321px) and (max-width: 376px) {
+  .gameImagesFilterBarShown {
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 250px;
+    object-fit: cover;
+  }
+}
+
+/*for mobile l*/
+@media screen and (min-width: 376px) and (max-width: 426px) {
+  .gameImagesFilterBarShown {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 300px;
+    object-fit: cover;
+  }
+}
+
+/*for tablets*/
+@media screen and (min-width: 426px) and (max-width: 769px) {
+  .gameImagesFilterBarShown {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 300px;
+    object-fit: cover;
+  }
+}
+
+/*for laptops*/
+@media screen and (min-width: 769px) and (max-width: 1025px) {
+  .gameImagesFilterBarShown {
+    height: 175px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+/*for laptops l*/
+@media screen and (min-width: 1025px) and (max-width: 1441px) {
+  .gameImagesFilterBarShown {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 275px;
+    object-fit: cover;
+  }
+}
+
+/*for bigger than laptops l*/
+@media screen and (min-width: 1441px) {
+  .gameImagesFilterBarShown {
+    height: 375px;
+    object-fit: cover;
+  }
+
+  .gameImagesFilterBarNotShown {
+    height: 400px;
+    object-fit: cover;
+  }
+}
+
+.customWidth {
+  width: 161px;
+  display: block;
+}
+
+.displayNoFilterBar {
+  display: none;
+}

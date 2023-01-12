@@ -1,0 +1,181 @@
+<!-- Navbar -->
+<div>
+  <app-navbar></app-navbar>
+</div>
+<!-- Navbar Ended-->
+
+<!-- Bottom Portion Of Screen -->
+<div class="container-fluid">
+  <div class="row">
+    <!-- Left Portion Of Screen -->
+    <div class="col-auto backgroundColor text-white min-vh-100">
+      <!-- Filter bar -->
+      <div id="filterBarDiv">
+        <h1 class="fs-3 mb-2 hover" (click)="displayTypeForFilterBar()">
+          Filters
+          <p class="arrows">&#8592;</p>
+        </h1>
+
+        <!-- Search -->
+        <input
+          class="form-control rounded mb-3 mt-3 customWidth"
+          type="search"
+          placeholder="Search..."
+          aria-label="Search"
+          [(ngModel)]="searchString"
+        />
+
+        <!-- Genres -->
+        <h2 class="fs-5 mb-2 hover" (click)="displayTypeForGenre()">
+          Genres
+          <p *ngIf="genresArrowDown; else genresArrowUp" class="arrows">
+            &#8595;
+          </p>
+          <ng-template #genresArrowUp>
+            <p class="arrows">&#8593;</p>
+          </ng-template>
+        </h2>
+        <div id="genresDiv" style="display: none">
+          <li
+            class="nav-item form-check customWidth"
+            *ngFor="let genre of genres"
+          >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [id]="genre.id"
+              [name]="genre.name"
+              (change)="checkBoxChanged(genre)"
+            />
+            <label class="form-check-label" [for]="genre.name">{{
+              genre.name
+            }}</label>
+          </li>
+        </div>
+        <!-- Genres ended-->
+
+        <!-- Platforms -->
+        <h2 class="fs-5 mb-2 hover" (click)="displayTypeForPlatform()">
+          Platforms
+          <p *ngIf="platformsArrowDown; else platformsArrowUp" class="arrows">
+            &#8595;
+          </p>
+          <ng-template #platformsArrowUp>
+            <p class="arrows">&#8593;</p>
+          </ng-template>
+        </h2>
+        <div id="platformsDiv" style="display: none">
+          <li class="nav-item form-check" *ngFor="let platform of platforms">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [id]="platform.id"
+              [name]="platform.name"
+              (change)="checkBoxChanged(platform)"
+            />
+            <label class="form-check-label" [for]="platform.name">{{
+              platform.name
+            }}</label>
+          </li>
+        </div>
+        <!-- Platforms ended -->
+
+        <!-- Filter Buttons-->
+        <div>
+          <!-- Filter Button -->
+          <button
+            class="btn btn-light mt-3 btn-sm customWidth"
+            (click)="filter()"
+          >
+            Search / Filter
+          </button>
+
+          <!-- Clear Button -->
+          <button
+            class="btn btn-light mt-3 btn-sm customWidth"
+            *ngIf="isVisibleClear"
+            (click)="clear()"
+          >
+            Clear Filters
+          </button>
+
+          <!-- Error Alert -->
+          <p
+            class="text-danger text-center mt-3 customWidth"
+            *ngIf="isVisibleClearErr"
+          >
+            Please pick one filter or click clear for no filters
+          </p>
+        </div>
+        <!-- Filter Buttons -->
+      </div>
+      <!-- Filter bar end -->
+
+      <div id="nonFilterBarDiv" class="displayNoFilterBar hover">
+        <h1 (click)="displayTypeForFilterBar()">&#8594;</h1>
+      </div>
+    </div>
+    <!-- Left Portion Of Screen ended-->
+
+    <!-- Right Portion of Screen -->
+    <div class="col py-3 backgroundColor text-white">
+      <!-- show this section if games array is not empty -->
+      <div class="row" *ngIf="gamesInfoDone; else loading">
+        <!-- Provides Count of Games -->
+        <div class="col-12">
+          <p class="mb-4">Games total : {{ gameCount }}</p>
+        </div>
+        <!-- Provides Count of Games ended -->
+
+        <!-- Get All Game Images-->
+        <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let game of games">
+          <img
+            class="img-thumbnail w-100 {{ imgClass }} gamingImages hover"
+            src="{{ game.backgroundImg }}"
+            routerLink="/game/{{ game.slug }}"
+          />
+          <p class="">
+            {{ game.name }}
+          </p>
+        </div>
+        <!-- Get All Game Images Ended-->
+
+        <!-- Navigation Button for Pages -->
+        <div class="col-12 text-center">
+          <button
+            type="button"
+            class="btn btn-link text-white"
+            *ngIf="previous"
+            (click)="getGamesInfo(this.previous)"
+          >
+            <h4>Previous Page</h4>
+          </button>
+          <button
+            type="button"
+            class="btn btn-link text-white"
+            *ngIf="next"
+            (click)="getGamesInfo(this.next)"
+          >
+            <h4>Next Page</h4>
+          </button>
+        </div>
+        <!-- Navigation Button for Pages-->
+      </div>
+      <!-- show this section if games array is not empty ended -->
+
+      <!-- show this section if games array is empty -->
+      <ng-template #loading>
+        <div
+          class="min-vh-100 d-flex justify-content-center align-items-center"
+        >
+          <div class="spinner-border" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </div>
+      </ng-template>
+      <!-- show this section if games array is empty ended -->
+    </div>
+    <!-- Right Portion of Screen ended-->
+  </div>
+</div>
+<!-- Bottom Portion Of Screen ended-->

@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+.backgroundColor {
+  background-color: #121212;
+}
+
+.hover {
+  cursor: pointer;
+}
+
+.arrows {
+  display: inline;
+}
+
+/* Color for highly recommend reviews */
+.highly.recommend {
+  color: green;
+}
+
+/* Color for recommend reviews */
+.Recommend {
+  color: darkgreen;
+}
+
+/* Color for by partial reviews */
+.By.Partial {
+  color: darkgoldenrod;
+}
+
+/* Color for not recommend reviews */
+.Not.Recommend {
+  color: darkred;
+}
+
+/* Color for highly not recommend reviews */
+.Highly.Not.Recommend {
+  color: red;
+}

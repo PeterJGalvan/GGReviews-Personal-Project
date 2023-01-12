@@ -1,0 +1,88 @@
+<!-- Navbar -->
+<div>
+  <app-navbar></app-navbar>
+</div>
+<!-- Navbar ended -->
+
+<!-- Displayed when content has been loaded -->
+<div *ngIf="reviewsFetched; else loading">
+  <!-- Display when there are reviews to show -->
+  <div class="backgroundColor" *ngIf="reviews.length !== 0; else noReviews">
+    <div class="backgroundColor container min-vh-100 py-5 text-dark">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-11 col-lg-9 col-xl-7">
+          <div>
+            <li
+              class="nav-item form-check customWidth"
+              *ngFor="let review of reviews"
+            >
+              <div class="d-flex flex-start mb-4">
+                <!-- All Profile Pictures the Same need to figure how to change them pre user -->
+                <img
+                  class="rounded-circle shadow-1-strong me-3"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
+                  alt="avatar"
+                  width="65"
+                  height="65"
+                />
+                <div class="card w-100">
+                  <div class="card-body p-4">
+                    <div class="">
+                      <h3>
+                        <a
+                          class="text-dark text-decoration-none"
+                          routerLink="/profile/{{ review.userName }}"
+                          >{{ review.userName }}</a
+                        >
+                      </h3>
+                      <p class="{{ review.rating }}">
+                        <a
+                          class="text-dark text-decoration-none"
+                          routerLink="/game/{{ review.gameSlug }}"
+                          >{{ review.gameName }}</a
+                        >
+                        <strong> Rating : {{ review.rating }} </strong>
+                      </p>
+                      <p>{{ review.descriptionValue }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Display when there are reviews to show ended -->
+
+  <!-- Display when there is no reviews to show -->
+  <ng-template #noReviews>
+    <div class="backgroundColor">
+      <div
+        class="min-vh-100 d-flex justify-content-center align-items-center text-white"
+      >
+        <h3 class="text-white text-center">
+          Currently No Reviews From "{{ urlIDElement }}"
+          <span *ngIf="urlIDElement === 'all'">Users</span>
+        </h3>
+      </div>
+    </div>
+  </ng-template>
+  <!-- Display when there is no reviews to show ended-->
+</div>
+<!-- Displayed when content has been loaded ended-->
+
+<!-- Spinner for waiting for content to load -->
+<ng-template #loading>
+  <div class="backgroundColor">
+    <div
+      class="min-vh-100 d-flex justify-content-center align-items-center text-white"
+    >
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Spinner for waiting for content to load ended-->

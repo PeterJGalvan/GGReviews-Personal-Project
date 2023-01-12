@@ -1,0 +1,251 @@
+<!-- Navbar -->
+<div>
+  <app-navbar></app-navbar>
+</div>
+<!-- Navbar ended -->
+
+<!-- Info has loaded -->
+<div
+  class="py-5 min-vh-100 backgroundColor text-white"
+  *ngIf="
+    gameInfoFetched && avgRatingCalculated && reviewsFetched;
+    else noGameInfoYet
+  "
+>
+  <!-- Game Content -->
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <!-- Game image -->
+      <div class="col-md-6">
+        <img
+          class="img-thumbnail card-img-top mb-5 mb-md-0 gameImg"
+          src="{{ game.backgroundImg }}"
+        />
+      </div>
+      <!-- Game image ended-->
+      <!-- Game info on right side -->
+      <div class="col-md-6">
+        <!-- Game header info -->
+        <h1 class="display-5 fw-bolder">{{ game.name }}</h1>
+        <!-- Game header info ended -->
+        <!-- Game sub-header info -->
+        <div class="fs-7 mb-5">
+          <span>Release Date: {{ game.released }}</span>
+          <br />
+          <span class="{{ avgRating }}">Rating: {{ avgRating }}</span>
+        </div>
+        <!-- Game sub-header info ended -->
+        <!-- Description header -->
+        <h5 class="fw-bolder hover" (click)="displayTypeForDescription()">
+          Description
+          <p
+            *ngIf="descriptionArrowUp; else descriptionArrowDown"
+            class="arrows"
+          >
+            &#8593;
+          </p>
+          <ng-template #descriptionArrowDown>
+            <p class="arrows">&#8595;</p>
+          </ng-template>
+        </h5>
+        <!-- Description header ended-->
+        <!-- Description info -->
+        <div id="descriptionDiv">
+          <p class="lead">{{ game.description }}</p>
+        </div>
+        <!-- Description info ended-->
+        <!-- Review button -->
+        <div class="d-flex">
+          <!-- If user has written a review for this game before -->
+          <div *ngIf="personalReviewRating !== ''; else writeAReview">
+            <button
+              class="btn btn-light"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#reviewModal"
+            >
+              Edit your Review
+            </button>
+          </div>
+          <!-- If user has written a review for this game before ended-->
+          <!-- 1st time writing a review for game -->
+          <ng-template #writeAReview>
+            <button
+              class="btn btn-light"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#reviewModal"
+            >
+              Write A Review
+            </button>
+          </ng-template>
+          <!-- 1st time writing a review for game ended-->
+        </div>
+        <!-- Review button ended-->
+      </div>
+      <!-- Game info on right side ended-->
+    </div>
+  </div>
+  <!-- Game Content ended -->
+
+  <!-- There are user reviews -->
+  <div *ngIf="reviews.length !== 0; else noReviews">
+    <div class="row-12 justify-content-center d-flex">
+      <div class="col-md-10 col-xl-8 text-center">
+        <h3 class="mb-4 hover" (click)="displayTypeForReviews()">
+          Reviews
+          <p *ngIf="reviewsArrowUp; else reviewsArrowDown" class="arrows">
+            &#8593;
+          </p>
+          <ng-template #reviewsArrowDown>
+            <p class="arrows">&#8595;</p>
+          </ng-template>
+        </h3>
+      </div>
+    </div>
+
+    <div id="reviewsDiv">
+      <div class="container py-5 text-dark">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-11 col-lg-9 col-xl-7">
+            <li
+              class="nav-item form-check customWidth"
+              *ngFor="let review of reviews"
+            >
+              <div class="d-flex flex-start mb-4">
+                <img
+                  class="rounded-circle shadow-1-strong me-3"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
+                  alt="avatar"
+                  width="65"
+                  height="65"
+                />
+                <div class="card w-100">
+                  <div class="card-body p-4">
+                    <div class="">
+                      <h3>
+                        <a
+                          class="text-dark text-decoration-none"
+                          routerLink="/profile/{{ review.userName }}"
+                          >{{ review.userName }}</a
+                        >
+                      </h3>
+                      <p class="{{ review.rating }}">
+                        <a
+                          class="text-dark text-decoration-none"
+                          routerLink="/game/{{ review.gameSlug }}"
+                          >{{ review.gameName }}</a
+                        >
+                        <strong> Rating : {{ review.rating }} </strong>
+                      </p>
+                      <p>{{ review.descriptionValue }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- There are user reviews ended-->
+
+  <!-- No reviews -->
+  <div>
+    <ng-template #noReviews>
+      <div class="row-12 justify-content-center d-flex">
+        <div class="col-md-10 col-xl-8 text-center">
+          <h3 class="mb-2">Be the 1st to Leave a Review</h3>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <!-- No reviews ended-->
+</div>
+<!-- Info has loaded ended-->
+
+<!-- Waiting for Info to load -->
+<div>
+  <ng-template #noGameInfoYet>
+    <div
+      class="min-vh-100 backgroundColor text-white d-flex justify-content-center align-items-center"
+    >
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<!-- Waiting for Info to load ended-->
+
+<!-- modal when clicking on review button -->
+<div class="modal fade" id="reviewModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Review for {{ game.name }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          [disabled]="postSending"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h5 class="mb-2">Rating</h5>
+        <select name="rating" id="rating" [disabled]="postSending">
+          <option
+            *ngIf="personalReviewRating !== ''"
+            value="{{ personalReviewRating }}"
+            selected
+            disabled
+            hidden
+          >
+            {{ personalReviewRating }}
+          </option>
+          <option value="Highly Recommend">Highly Recommend</option>
+          <option value="Recommend">Recommend</option>
+          <option value="By Partial">By Partial</option>
+          <option value="Not Recommend">Not Recommend</option>
+          <option value="Highly Not Recommend">Highly Not Recommend</option>
+        </select>
+        <h5 class="mb-2 mt-2" rows="10">Context</h5>
+        <div *ngIf="personalReviewRating === ''; else reviewWithInfo">
+          <textarea
+            id="description"
+            class="writeAReviewTextBox"
+            [disabled]="postSending"
+          ></textarea>
+        </div>
+        <div>
+          <ng-template #reviewWithInfo>
+            <textarea
+              id="description"
+              class="writeAReviewTextBox"
+              [disabled]="postSending"
+              >{{ personalReviewDescription }}</textarea
+            >
+          </ng-template>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          (click)="writeReview()"
+          class="btn btn-dark btn-md"
+          type="button"
+          [disabled]="postSending"
+        >
+          <span
+            class="spinner-border spinner-border-sm text-light"
+            role="status"
+            *ngIf="postSending"
+          ></span>
+          Post Review
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal when clicking on review button ended-->

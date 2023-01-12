@@ -1,0 +1,53 @@
+/*for mobile s*/
+@media screen and (max-width: 320px) {
+  .gameImg {
+    height: 250px;
+    object-fit: cover;
+  }
+}
+
+/*for mobile m*/
+@media screen and (min-width: 321px) and (max-width: 376px) {
+  .gameImg {
+    height: 275px;
+    object-fit: cover;
+  }
+}
+
+/*for mobile l*/
+@media screen and (min-width: 376px) and (max-width: 426px) {
+  .gameImg {
+    height: 325px;
+    object-fit: cover;
+  }
+}
+
+/*for tablets*/
+@media screen and (min-width: 426px) and (max-width: 769px) {
+  .gameImg {
+    height: 275px;
+    object-fit: cover;
+  }
+}
+
+/*for laptops*/
+@media screen and (min-width: 769px) and (max-width: 1025px) {
+  .gameImg {
+    height: 350px;
+    object-fit: cover;
+  }
+}
+
+/*for laptops l and bigger*/
+@media screen and (min-width: 1025px) {
+  .gameImg {
+    height: 500px;
+    object-fit: cover;
+  }
+}
+
+/*  Text Box Sizing for Review Description */
+.writeAReviewTextBox {
+  box-sizing: border-box;
+  width: 100%;
+}
